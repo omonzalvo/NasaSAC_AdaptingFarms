@@ -4,6 +4,7 @@ import pandas as pd
 import folium
 from streamlit_folium import st_folium
 from services.power import get_power_data
+from services.gibs import CAPAS, tile_url, ultima_fecha_disponible
 
 st.set_page_config(page_title="Adapting Farms", page_icon="🌱", layout="wide")
 
@@ -13,30 +14,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-CAPAS = {
-    "Calor": ("MODIS_Terra_Land_Surface_Temp_Day", "GoogleMapsCompatible_Level7", "png", 7),
-    "Lluvia": ("IMERG_Precipitation_Rate", "GoogleMapsCompatible_Level6", "png", 6),
-    "Vegetación": ("MODIS_Terra_NDVI_8Day", "GoogleMapsCompatible_Level9", "png", 9),
-}
-
-
 @st.cache_data(ttl=1800)
-def ultima_fecha_disponible(capa, matriz, formato, max_dias=10):
-    """Busca hacia atrás la fecha más reciente con imagen disponible."""
-    hoy = pd.Timestamp.today().normalize()
-    for i in range(max_dias):
-        f = hoy - pd.Timedelta(days=i)
-        url = (
-            "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/"
-            f"{capa}/default/{f:%Y-%m-%d}/{matriz}/3/3/1.{formato}"
-        )
-        try:
-            r = requests.get(url, timeout=3)
-            if r.status_code == 200 and len(r.content) > 1500:
-                return f.date()
-        except requests.RequestException:
-            pass
-    return (hoy - pd.Timedelta(days=5)).date()
+def fecha_reciente(capa, matriz, formato):
+    return ultima_fecha_disponible(capa, matriz, formato)
 
 
 @st.cache_data(ttl=3600)
@@ -124,6 +104,8 @@ mapa = st_folium(
 )
 
 guardar_clic(mapa)
+
+## Now
 
 punto = st.session_state["punto"]
 if not punto:
