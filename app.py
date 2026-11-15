@@ -1,14 +1,17 @@
-import requests
-import streamlit as st
+import re
+
 import pandas as pd
+import streamlit as st
 import folium
 from streamlit_folium import st_folium
+
 from services.power import get_power_data
-from services.gibs import CAPAS, tile_url, ultima_fecha_disponible
+from services.gibs import CAPAS, CAPAS_WMS, WMS_URL, tile_url, ultima_fecha_disponible
 from services.llm import explicar
 from services.ambience import indicadores, tabla_mensual, indicadores_extra, anomalias_mensuales
+from services import risk, zone
 
-##Headers y configuración de la página
+## Configuración de la página
 st.set_page_config(page_title="Adapting Farms", page_icon="🌱", layout="wide")
 
 st.markdown("<h1 style='text-align: center;'>Adapting Farms</h1>", unsafe_allow_html=True)
@@ -17,22 +20,35 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-##Cargando el LLM y la cache de datos
+MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
+         "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+## Funciones con caché
 @st.cache_data(ttl=3600)
 def explicacion(contexto):
     return explicar(contexto)
-##Cargando datos de NASA POWER y cacheando
+
+
 @st.cache_data(ttl=1800)
 def fecha_reciente(capa, matriz, formato):
     return ultima_fecha_disponible(capa, matriz, formato)
-##Intetractuando con el LLM
-MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+
+@st.cache_data(ttl=3600)
+def cargar_clima(lat, lon, inicio, fin):
+    return get_power_data(lat, lon, inicio, fin)
+
+
+## Agente de interpretación (Gemini)
 def interpretar_clima(df, lat, lon, extra_texto=""):
+    """Le pasa a Gemini los datos de NASA POWER para que los lea y redacte el informe."""
     st.subheader("Agente de interpretación del clima")
 
     mensual = tabla_mensual(df)
-    mensual.index = [f"{MESES[i.month-1]} {i.year}" for i in mensual.index]
-    tabla = mensual.to_csv(float_format="%.2f", index_label="Mes")
+    mensual.index = [f"{MESES[d.month - 1]} {d.year}" for d in mensual.index]
+    tabla = mensual.to_csv(float_format="%.2f", index_label="mes")
+
     dia_lluvia = df["PRECTOTCORR"].idxmax()
     dia_calor = df["T2M_MAX"].idxmax()
 
@@ -47,19 +63,15 @@ def interpretar_clima(df, lat, lon, extra_texto=""):
     )
 
     try:
-        with st.spinner("Prometheus está leyendo los datos de la NASA..."):
+        with st.spinner("Gemini está leyendo los datos de la NASA..."):
             texto = explicacion(contexto)
-        st.write(texto)
+        st.markdown(re.sub(r"\n(?!\n)", "\n\n", texto))
         st.caption("Informe redactado por IA a partir de datos de NASA POWER. Es orientativo.")
     except Exception as e:
         st.warning(f"No se pudo generar la explicación en este momento: {e}")
 
-##Cargando datos de NASA POWER y cacheando
-@st.cache_data(ttl=3600)
-def cargar_clima(lat, lon, inicio, fin):
-    return get_power_data(lat, lon, inicio, fin)
 
-###Mapa interactivo con folium
+## Mapa interactivo
 def guardar_clic(estado):
     """Guarda el último clic del mapa con la longitud normalizada a [-180, 180]."""
     if estado and estado.get("last_clicked"):
@@ -74,12 +86,13 @@ if "punto" not in st.session_state:
 
 filtro = st.segmented_control(
     "Filtros del mapa",
-    ["Sin filtro", *CAPAS.keys()],
+    ["Sin filtro", *CAPAS.keys(), *CAPAS_WMS.keys()],
     default="Sin filtro",
 ) or "Sin filtro"
 
 fecha = None
 capa_sel = CAPAS.get(filtro)
+wms_sel = CAPAS_WMS.get(filtro)
 if capa_sel:
     capa, matriz, formato, zoom_max = capa_sel
     auto = fecha_reciente(capa, matriz, formato)
@@ -88,7 +101,15 @@ if capa_sel:
         auto,
         max_value=pd.Timestamp.today().normalize().date(),
     )
+elif wms_sel:
+    retraso = wms_sel[2]
+    fecha = st.date_input(
+        "Fecha de la capa",
+        (pd.Timestamp.today().normalize() - pd.Timedelta(days=retraso)).date(),
+        max_value=pd.Timestamp.today().normalize().date(),
+    )
 
+# El mapa se rehace (key nueva) cuando cambia el filtro o la fecha: así sigue recibiendo clics
 firma = f"{filtro}|{fecha}"
 KEY_MAPA = f"mapa|{firma}"
 
@@ -112,13 +133,10 @@ m = folium.Map(
 
 cambiante = folium.FeatureGroup(name="dinamico")
 
+# Capas de la NASA (mosaicos WMTS)
 if capa_sel and fecha:
-    url = (
-        "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/"
-        f"{capa}/default/{fecha:%Y-%m-%d}/{matriz}/{{z}}/{{y}}/{{x}}.{formato}"
-    )
     folium.TileLayer(
-        tiles=url,
+        tiles=tile_url(capa, matriz, formato, fecha),
         attr="NASA GIBS",
         name=filtro,
         overlay=True,
@@ -127,10 +145,26 @@ if capa_sel and fecha:
     ).add_to(cambiante)
     st.caption(f"Mostrando {filtro} del {fecha:%d/%m/%Y}")
 
+# Capas de la NASA (WMS: incendios y humedad del suelo SMAP)
+if wms_sel and fecha:
+    ident, fmt, _ = wms_sel
+    folium.WmsTileLayer(
+        url=WMS_URL,
+        layers=ident,
+        fmt=fmt,
+        transparent=True,
+        version="1.1.1",
+        attr="NASA GIBS",
+        name=filtro,
+        overlay=True,
+        opacity=0.8,
+        time=f"{fecha:%Y-%m-%d}",
+    ).add_to(cambiante)
+    st.caption(f"Mostrando {filtro} del {fecha:%d/%m/%Y}")
+
 if st.session_state["punto"]:
     folium.Marker(list(st.session_state["punto"]), tooltip="Parcela").add_to(cambiante)
 
-##Definiendo el Mapa
 mapa = st_folium(
     m,
     key=KEY_MAPA,
@@ -142,14 +176,13 @@ mapa = st_folium(
 
 guardar_clic(mapa)
 
-##Fetch de Datos de NASA POWER
+## Datos del punto elegido
 punto = st.session_state["punto"]
 if not punto:
     st.info("Haz clic en el mapa para ver el clima de tu parcela.")
     st.stop()
 
 lat, lon = punto
-st.write(f"Punto seleccionado: **{lat:.3f}, {lon:.3f}**")
 
 fin = pd.Timestamp.today().normalize() - pd.Timedelta(days=7)
 inicio = fin - pd.Timedelta(days=364)
@@ -161,7 +194,7 @@ except Exception as e:
     st.error(f"No se pudieron obtener los datos: {e}")
     st.stop()
 
-#Agente de LLM
+# Indicadores ambientales y comparación con los 10 años anteriores
 amb = indicadores(df)
 extra = indicadores_extra(df)
 
@@ -181,14 +214,46 @@ if anom is not None and not anom.empty:
         + anom.to_csv(float_format="%.1f")
     )
 
-# Agente de IA
+# Informe de Gemini
 interpretar_clima(df, lat, lon, extra_texto)
 
-##Tabla de lluvia y temperatura
+st.divider()
+st.write(f"Punto seleccionado: **{lat:.3f}, {lon:.3f}**")
+
+## Métricas de lluvia y temperatura
 c1, c2, c3 = st.columns(3)
 c1.metric("Lluvia total", f"{df['PRECTOTCORR'].sum():.0f} mm")
 c2.metric("Temp. media", f"{df['T2M'].mean():.1f} °C")
 c3.metric("Temp. máx. media", f"{df['T2M_MAX'].mean():.1f} °C")
+
+# Riesgos del punto (sin peticiones extra: usan el año que ya descargamos)
+fila_pt = zone.resumen_celda(df)
+fila_pt.update(lat=lat, lon=lon, paso=zone.PASO)
+pt = risk.calcular(pd.DataFrame([fila_pt]))
+mostrar = [
+    (nombre.replace("Riesgo: ", ""), col)
+    for nombre, (col, _) in risk.CAPAS_RIESGO.items()
+    if col in pt.columns and pd.notna(pt[col].iloc[0])
+]
+if mostrar:
+    st.subheader("Riesgos en tu punto (últimos 12 meses)")
+    for col_st, (nombre, col) in zip(st.columns(len(mostrar)), mostrar):
+        col_st.metric(nombre, f"{pt[col].iloc[0]:.0f}/100")
+
+st.subheader("Ambiente (observaciones de la NASA)")
+a1, a2, a3, a4 = st.columns(4)
+a1.metric("Días de helada", amb["dias_helada"], help="Días con temperatura mínima ≤ 0 °C")
+a2.metric("Días de calor extremo", amb["dias_calor_extremo"], help="Temperatura máxima ≥ 35 °C")
+a3.metric("Racha seca más larga", f"{amb['racha_seca_dias']} días", help="Días seguidos con menos de 1 mm")
+a4.metric("Días de lluvia intensa", amb["dias_lluvia_intensa"], help="20 mm o más en un solo día")
+
+e1, e2, e3, e4 = st.columns(4)
+e1.metric("Grados-día (base 10 °C)", f"{extra['gdd_base10']:.0f}")
+e2.metric("Rango diario medio", f"{extra['rango_diurno']:.1f} °C")
+e3.metric("Periodo sin heladas", f"{extra['periodo_sin_helada_dias']} días")
+e4.metric("Lluvia en 3 meses", f"{extra['concentracion_lluvia']:.0f} %")
+
+## Gráficas
 st.caption("Temperatura diaria del último año (°C)")
 st.line_chart(df[["T2M", "T2M_MAX"]])
 
@@ -200,3 +265,7 @@ if reglas[vista_lluvia]:
 
 st.caption(f"Lluvia por {vista_lluvia.lower()} del último año (mm)")
 st.bar_chart(lluvia)
+
+if anom is not None and not anom.empty:
+    st.caption("Lluvia del último año frente al promedio de los 10 años anteriores (%)")
+    st.bar_chart(anom["lluvia_vs_normal_%"])
