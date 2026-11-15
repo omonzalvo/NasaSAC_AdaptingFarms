@@ -1,3 +1,18 @@
+"""Descarga de datos diarios de NASA POWER para un punto.
+
+POWER combina observaciones satelitales y modelos (reanálisis) en una malla de
+unos 50 km. Es la fuente de todos los cálculos de la app.
+
+Variables que se piden (comunidad AG, agricultura):
+    PRECTOTCORR  lluvia corregida (mm/día)
+    T2M, T2M_MIN, T2M_MAX  temperatura media, mínima y máxima a 2 m (°C)
+    T2MDEW, T2MWET  punto de rocío y bulbo húmedo (°C)
+    RH2M  humedad relativa a 2 m (%)
+    WS10M, WS50M  viento a 10 y 50 m (m/s)
+    ALLSKY_SFC_SW_DWN, ALLSKY_SFC_PAR_TOT, ALLSKY_KT  radiación solar
+    GWETTOP, GWETROOT, GWETPROF  humedad del suelo (0 a 1) en superficie, raíces y perfil
+    EVLAND  evaporación desde el suelo (mm/día)
+"""
 import numpy as np
 import pandas as pd
 import requests
@@ -8,7 +23,7 @@ PARAMETROS = [
     "ALLSKY_SFC_SW_DWN", "PRECTOTCORR", "WS10M", "WS50M",
     "T2M", "T2MDEW", "T2MWET", "T2M_MIN", "T2M_MAX",
     "ALLSKY_KT", "ALLSKY_SFC_PAR_TOT",
-    "GWETTOP", "GWETROOT", "GWETPROF",
+    "GWETTOP", "GWETROOT", "GWETPROF", "EVLAND", "RH2M",
 ]
 
 def get_power_data(lat, lon, start_date, end_date):

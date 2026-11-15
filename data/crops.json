@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "scope": "Catálogo general orientativo: no validado para variedades locales.",
+  "crops": {
+    "Maíz": {
+      "family": "Poaceae",
+      "water_mm": [
+        500,
+        800
+      ],
+      "water_basis": "ET de ciclo completo orientativa; no equivale a lluvia requerida ni riego.",
+      "drought_sensitivity": "media-alta",
+      "nitrogen_fixation_potential": false,
+      "frost": "Sensible",
+      "gdd_target": null,
+      "gdd_note": "Requiere variedad y método; no se inventa un valor universal.",
+      "sources": [
+        "https://www.fao.org/4/s2022e/s2022e07.htm",
+        "https://s3.eu-west-1.amazonaws.com/data.gaezdev.aws.fao.org/crop_profiles/GAEZ_Crop_profile_maize.pdf"
+      ]
+    },
+    "Frijol": {
+      "family": "Fabaceae",
+      "water_mm": [
+        300,
+        500
+      ],
+      "water_basis": "ET de ciclo completo orientativa; no equivale a lluvia requerida ni riego.",
+      "drought_sensitivity": "media-alta",
+      "nitrogen_fixation_potential": true,
+      "frost": "Sensible",
+      "gdd_target": null,
+      "gdd_note": "Requiere variedad y método; no se inventa un valor universal.",
+      "sources": [
+        "https://www.fao.org/4/s2022e/s2022e07.htm",
+        "https://genebanks.cgiar.org/resources/publications/beans-eng/",
+        "https://extension.colostate.edu/resource/fertilizing-dry-beans/"
+      ]
+    },
+    "Sorgo": {
+      "family": "Poaceae",
+      "water_mm": [
+        450,
+        650
+      ],
+      "water_basis": "ET de ciclo completo orientativa; no equivale a lluvia requerida ni riego.",
+      "drought_sensitivity": "baja",
+      "nitrogen_fixation_potential": false,
+      "frost": "Sensible",
+      "gdd_target": null,
+      "gdd_note": "Requiere variedad y método; no se inventa un valor universal.",
+      "sources": [
+        "https://www.fao.org/4/s2022e/s2022e07.htm",
+        "https://www.fao.org/4/x7660e/x7660e09.htm"
+      ]
+    }
+  }
+}

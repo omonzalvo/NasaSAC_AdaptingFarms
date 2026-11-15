@@ -1,3 +1,16 @@
+"""Prometheus: app de Streamlit para el NASA Space Apps Challenge 2026 (Team Nova Aquila).
+
+Flujo de la página:
+    1. Mapa con capas de NASA GIBS; el usuario hace clic en su parcela.
+    2. Se descartan los clics en el mar (services.land).
+    3. Se descarga un año de NASA POWER y diez años para comparar (services.power).
+    4. Se calculan indicadores y riesgos (services.ambience, services.zone, services.risk).
+    5. Prometheus redacta un informe del clima (services.llm).
+    6. Se muestran métricas y gráficas.
+    7. El agricultor compara tres rotaciones de cultivo (services.rotation_ui).
+
+Ejecutar:  docker compose up -d --build   o   streamlit run app.py
+"""
 import re
 
 import pandas as pd
@@ -10,11 +23,13 @@ from services.gibs import CAPAS, CAPAS_WMS, WMS_URL, tile_url, ultima_fecha_disp
 from services.llm import explicar
 from services.ambience import indicadores, tabla_mensual, indicadores_extra, anomalias_mensuales
 from services import risk, zone
+from services.land import classify_point
+from services.rotation_ui import render_rotations
 
 ## Configuración de la página
-st.set_page_config(page_title="Adapting Farms", page_icon="🌱", layout="wide")
+st.set_page_config(page_title="Prometheus", page_icon="🌱", layout="wide")
 
-st.markdown("<h1 style='text-align: center;'>Adapting Farms</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>Prometheus</h1>", unsafe_allow_html=True)
 st.markdown(
     "<p style='text-align: center; color: gray;'>NASA Space Apps Challenge 2026 - Team: Nova Aquila</p>",
     unsafe_allow_html=True,
@@ -27,23 +42,26 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
 ## Funciones con caché
 @st.cache_data(ttl=3600)
 def explicacion(contexto):
+    """Informe del clima de Prometheus, guardado una hora para no repetir llamadas."""
     return explicar(contexto)
 
 
 @st.cache_data(ttl=1800)
 def fecha_reciente(capa, matriz, formato):
+    """Última fecha con imagen de una capa GIBS, guardada 30 minutos."""
     return ultima_fecha_disponible(capa, matriz, formato)
 
 
 @st.cache_data(ttl=3600)
 def cargar_clima(lat, lon, inicio, fin):
+    """Datos diarios de NASA POWER, guardados una hora por punto y periodo."""
     return get_power_data(lat, lon, inicio, fin)
 
 
 ## Agente de interpretación (Gemini)
 def interpretar_clima(df, lat, lon, extra_texto=""):
     """Le pasa a Gemini los datos de NASA POWER para que los lea y redacte el informe."""
-    st.subheader("Agente de interpretación del clima")
+    st.subheader("Prometheus · interpretación del clima")
 
     mensual = tabla_mensual(df)
     mensual.index = [f"{MESES[d.month - 1]} {d.year}" for d in mensual.index]
@@ -63,10 +81,10 @@ def interpretar_clima(df, lat, lon, extra_texto=""):
     )
 
     try:
-        with st.spinner("Gemini está leyendo los datos de la NASA..."):
+        with st.spinner("Prometheus está leyendo los datos de la NASA..."):
             texto = explicacion(contexto)
         st.markdown(re.sub(r"\n(?!\n)", "\n\n", texto))
-        st.caption("Informe redactado por IA a partir de datos de NASA POWER. Es orientativo.")
+        st.caption("Informe redactado por Prometheus (IA con tecnología Gemini de Google) a partir de datos de NASA POWER. Es orientativo.")
     except Exception as e:
         st.warning(f"No se pudo generar la explicación en este momento: {e}")
 
@@ -184,6 +202,13 @@ if not punto:
 
 lat, lon = punto
 
+tipo_punto = classify_point(lat, lon)
+if tipo_punto == "ocean":
+    st.warning("Ese punto está en el mar. Haz clic sobre tierra firme para analizar una parcela.")
+    st.stop()
+if tipo_punto == "uncertain":
+    st.info("El punto está cerca de la costa: revisa que corresponda a tierra firme.")
+
 fin = pd.Timestamp.today().normalize() - pd.Timedelta(days=7)
 inicio = fin - pd.Timedelta(days=364)
 
@@ -269,3 +294,7 @@ st.bar_chart(lluvia)
 if anom is not None and not anom.empty:
     st.caption("Lluvia del último año frente al promedio de los 10 años anteriores (%)")
     st.bar_chart(anom["lluvia_vs_normal_%"])
+
+## Comparación de rotaciones
+st.divider()
+render_rotations(df, lat, lon)

@@ -1,3 +1,4 @@
+"""Resumen de un año de datos en los indicadores que usa services.risk."""
 PASO = 0.5
 
 

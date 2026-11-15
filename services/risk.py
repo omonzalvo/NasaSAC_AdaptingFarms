@@ -1,3 +1,9 @@
+"""Índices de riesgo de 0 a 100 para el punto elegido.
+
+Cada índice divide un conteo (días de helada, días de calor, etc.) entre un tope
+definido por el equipo y lo recorta a 0-1. Son heurísticas del proyecto, no
+probabilidades: los topes están arriba y se pueden ajustar.
+"""
 # Umbrales: son decisiones del proyecto. Ajústalos y documéntalos.
 TOPE_HELADA = 30          # días de helada al año = riesgo 100
 TOPE_CALOR = 60           # días con máxima >= 35 °C = riesgo 100

@@ -1,3 +1,8 @@
+"""Capas visuales de NASA GIBS para el mapa.
+
+GIBS (Global Imagery Browse Services) sirve imágenes satelitales ya renderizadas.
+Estas capas solo se ven en el mapa: no entran en ningún cálculo de la app.
+"""
 import pandas as pd
 import requests
 

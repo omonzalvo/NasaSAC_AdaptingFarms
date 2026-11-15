@@ -1,4 +1,18 @@
+"""Indicadores ambientales calculados a partir de los datos diarios de NASA POWER.
+
+Todo lo que muestra la app (métricas, tabla mensual, anomalías) y lo que se le
+envía a Prometheus sale de estas funciones. Las cuentas se hacen aquí, en código,
+para que la IA solo interprete números ya calculados y no invente cifras.
+"""
+import numpy as np
 import pandas as pd
+
+
+def serie(df, name):
+    """Columna numérica limpia; los valores faltantes de la NASA (-999) quedan como NaN."""
+    s = pd.to_numeric(df.get(name, pd.Series(index=df.index, dtype=float)), errors="coerce")
+    return s.replace([np.inf, -np.inf, -999], np.nan)
+
 
 def indicadores(df):
     """Indicadores ambientales a partir de los datos diarios de NASA POWER."""
