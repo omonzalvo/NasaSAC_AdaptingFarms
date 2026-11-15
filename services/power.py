@@ -4,7 +4,6 @@ import requests
 
 POWER_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
 
-
 def get_power_data(lat, lon, start_date, end_date):
     """start_date y end_date en formato 'AAAAMMDD' (texto)."""
     params = {
