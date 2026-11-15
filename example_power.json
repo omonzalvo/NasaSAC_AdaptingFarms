@@ -1,0 +1,485 @@
+{
+  "latitude": 21.861,
+  "longitude": -100.625,
+  "start": "2025-01-01",
+  "end": "2025-01-31",
+  "source": "NASA POWER Daily API",
+  "source_metadata": {
+    "header": {
+      "title": "NASA/POWER Source Native Resolution Daily Data",
+      "api": {
+        "version": "v2.10.3",
+        "name": "POWER Daily API"
+      },
+      "sources": [
+        "MERRA2",
+        "SYN1DEG",
+        "POWER"
+      ],
+      "fill_value": -999.0,
+      "time_standard": "LST",
+      "start": "20250101",
+      "end": "20250131"
+    },
+    "parameters": {
+      "ALLSKY_SFC_SW_DWN": {
+        "units": "MJ/m^2/day",
+        "longname": "All Sky Surface Shortwave Downward Irradiance"
+      },
+      "PRECTOTCORR": {
+        "units": "mm/day",
+        "longname": "Precipitation Corrected"
+      },
+      "WS10M": {
+        "units": "m/s",
+        "longname": "Wind Speed at 10 Meters"
+      },
+      "WS50M": {
+        "units": "m/s",
+        "longname": "Wind Speed at 50 Meters"
+      },
+      "T2M": {
+        "units": "C",
+        "longname": "Temperature at 2 Meters"
+      },
+      "T2MDEW": {
+        "units": "C",
+        "longname": "Dew/Frost Point at 2 Meters"
+      },
+      "T2MWET": {
+        "units": "C",
+        "longname": "Wet Bulb Temperature at 2 Meters"
+      },
+      "T2M_MIN": {
+        "units": "C",
+        "longname": "Temperature at 2 Meters Minimum"
+      },
+      "T2M_MAX": {
+        "units": "C",
+        "longname": "Temperature at 2 Meters Maximum"
+      },
+      "ALLSKY_KT": {
+        "units": "dimensionless",
+        "longname": "All Sky Insolation Clearness Index"
+      },
+      "ALLSKY_SFC_PAR_TOT": {
+        "units": "MJ/m^2/day",
+        "longname": "All Sky Surface Total PAR"
+      }
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        -100.625,
+        21.861,
+        1787.54
+      ]
+    },
+    "request_url": "https://power.larc.nasa.gov/api/temporal/daily/point?start=20250101&end=20250131&latitude=21.861&longitude=-100.625&community=AG&parameters=ALLSKY_SFC_SW_DWN%2CPRECTOTCORR%2CWS10M%2CWS50M%2CT2M%2CT2MDEW%2CT2MWET%2CT2M_MIN%2CT2M_MAX%2CALLSKY_KT%2CALLSKY_SFC_PAR_TOT&format=JSON&time-standard=LST"
+  },
+  "daily": {
+    "2025-01-01": {
+      "ALLSKY_SFC_SW_DWN": 18.35,
+      "PRECTOTCORR": 0.2,
+      "WS10M": 2.82,
+      "WS50M": 3.67,
+      "T2M": 14.2,
+      "T2MDEW": 3.85,
+      "T2MWET": 9.03,
+      "T2M_MIN": 7.35,
+      "T2M_MAX": 23.53,
+      "ALLSKY_KT": 0.73,
+      "ALLSKY_SFC_PAR_TOT": 7.83
+    },
+    "2025-01-02": {
+      "ALLSKY_SFC_SW_DWN": 15.95,
+      "PRECTOTCORR": 0.19,
+      "WS10M": 3.03,
+      "WS50M": 4.27,
+      "T2M": 14.96,
+      "T2MDEW": 10.86,
+      "T2MWET": 12.91,
+      "T2M_MIN": 10.99,
+      "T2M_MAX": 21.87,
+      "ALLSKY_KT": 0.64,
+      "ALLSKY_SFC_PAR_TOT": 7.02
+    },
+    "2025-01-03": {
+      "ALLSKY_SFC_SW_DWN": 14.83,
+      "PRECTOTCORR": 0.29,
+      "WS10M": 3.83,
+      "WS50M": 5.07,
+      "T2M": 14.51,
+      "T2MDEW": 10.68,
+      "T2MWET": 12.59,
+      "T2M_MIN": 11.31,
+      "T2M_MAX": 20.48,
+      "ALLSKY_KT": 0.59,
+      "ALLSKY_SFC_PAR_TOT": 6.62
+    },
+    "2025-01-04": {
+      "ALLSKY_SFC_SW_DWN": 14.86,
+      "PRECTOTCORR": 0.08,
+      "WS10M": 1.9,
+      "WS50M": 2.91,
+      "T2M": 15.35,
+      "T2MDEW": 8.25,
+      "T2MWET": 11.8,
+      "T2M_MIN": 10.44,
+      "T2M_MAX": 23.66,
+      "ALLSKY_KT": 0.59,
+      "ALLSKY_SFC_PAR_TOT": 6.66
+    },
+    "2025-01-05": {
+      "ALLSKY_SFC_SW_DWN": 18.13,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 4.15,
+      "WS50M": 6.18,
+      "T2M": 16.6,
+      "T2MDEW": 2.41,
+      "T2MWET": 9.51,
+      "T2M_MIN": 10.6,
+      "T2M_MAX": 25.33,
+      "ALLSKY_KT": 0.72,
+      "ALLSKY_SFC_PAR_TOT": 7.98
+    },
+    "2025-01-06": {
+      "ALLSKY_SFC_SW_DWN": 13.25,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 3.7,
+      "WS50M": 4.31,
+      "T2M": 12.22,
+      "T2MDEW": 2.8,
+      "T2MWET": 7.51,
+      "T2M_MIN": 6.48,
+      "T2M_MAX": 20.36,
+      "ALLSKY_KT": 0.52,
+      "ALLSKY_SFC_PAR_TOT": 5.91
+    },
+    "2025-01-07": {
+      "ALLSKY_SFC_SW_DWN": 5.8,
+      "PRECTOTCORR": 0.2,
+      "WS10M": 2.26,
+      "WS50M": 3.08,
+      "T2M": 11.01,
+      "T2MDEW": 5.02,
+      "T2MWET": 8.02,
+      "T2M_MIN": 6.2,
+      "T2M_MAX": 17.78,
+      "ALLSKY_KT": 0.23,
+      "ALLSKY_SFC_PAR_TOT": 2.77
+    },
+    "2025-01-08": {
+      "ALLSKY_SFC_SW_DWN": 9.34,
+      "PRECTOTCORR": 0.6,
+      "WS10M": 3.1,
+      "WS50M": 3.54,
+      "T2M": 9.53,
+      "T2MDEW": 6.24,
+      "T2MWET": 7.88,
+      "T2M_MIN": 6.55,
+      "T2M_MAX": 14.79,
+      "ALLSKY_KT": 0.37,
+      "ALLSKY_SFC_PAR_TOT": 4.34
+    },
+    "2025-01-09": {
+      "ALLSKY_SFC_SW_DWN": 15.37,
+      "PRECTOTCORR": 0.03,
+      "WS10M": 6.43,
+      "WS50M": 9.16,
+      "T2M": 15.38,
+      "T2MDEW": 7.75,
+      "T2MWET": 11.56,
+      "T2M_MIN": 7.0,
+      "T2M_MAX": 24.84,
+      "ALLSKY_KT": 0.6,
+      "ALLSKY_SFC_PAR_TOT": 6.93
+    },
+    "2025-01-10": {
+      "ALLSKY_SFC_SW_DWN": 7.14,
+      "PRECTOTCORR": 0.53,
+      "WS10M": 5.48,
+      "WS50M": 7.42,
+      "T2M": 14.31,
+      "T2MDEW": 8.57,
+      "T2MWET": 11.44,
+      "T2M_MIN": 5.77,
+      "T2M_MAX": 21.37,
+      "ALLSKY_KT": 0.28,
+      "ALLSKY_SFC_PAR_TOT": 3.39
+    },
+    "2025-01-11": {
+      "ALLSKY_SFC_SW_DWN": 7.31,
+      "PRECTOTCORR": 0.53,
+      "WS10M": 3.32,
+      "WS50M": 4.64,
+      "T2M": 11.31,
+      "T2MDEW": 5.46,
+      "T2MWET": 8.39,
+      "T2M_MIN": 2.64,
+      "T2M_MAX": 22.42,
+      "ALLSKY_KT": 0.28,
+      "ALLSKY_SFC_PAR_TOT": 3.38
+    },
+    "2025-01-12": {
+      "ALLSKY_SFC_SW_DWN": 12.32,
+      "PRECTOTCORR": 0.01,
+      "WS10M": 5.24,
+      "WS50M": 7.35,
+      "T2M": 15.38,
+      "T2MDEW": 8.02,
+      "T2MWET": 11.7,
+      "T2M_MIN": 9.86,
+      "T2M_MAX": 22.94,
+      "ALLSKY_KT": 0.48,
+      "ALLSKY_SFC_PAR_TOT": 5.52
+    },
+    "2025-01-13": {
+      "ALLSKY_SFC_SW_DWN": 17.23,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 2.56,
+      "WS50M": 3.07,
+      "T2M": 11.99,
+      "T2MDEW": 5.99,
+      "T2MWET": 8.99,
+      "T2M_MIN": 6.21,
+      "T2M_MAX": 19.03,
+      "ALLSKY_KT": 0.67,
+      "ALLSKY_SFC_PAR_TOT": 7.67
+    },
+    "2025-01-14": {
+      "ALLSKY_SFC_SW_DWN": 14.22,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 1.44,
+      "WS50M": 2.28,
+      "T2M": 12.41,
+      "T2MDEW": 3.09,
+      "T2MWET": 7.75,
+      "T2M_MIN": 5.61,
+      "T2M_MAX": 22.46,
+      "ALLSKY_KT": 0.55,
+      "ALLSKY_SFC_PAR_TOT": 6.45
+    },
+    "2025-01-15": {
+      "ALLSKY_SFC_SW_DWN": 17.82,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 2.64,
+      "WS50M": 3.35,
+      "T2M": 14.9,
+      "T2MDEW": 3.53,
+      "T2MWET": 9.22,
+      "T2M_MIN": 7.73,
+      "T2M_MAX": 26.26,
+      "ALLSKY_KT": 0.68,
+      "ALLSKY_SFC_PAR_TOT": 7.97
+    },
+    "2025-01-16": {
+      "ALLSKY_SFC_SW_DWN": 18.18,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 2.9,
+      "WS50M": 3.59,
+      "T2M": 12.62,
+      "T2MDEW": 6.52,
+      "T2MWET": 9.57,
+      "T2M_MIN": 6.87,
+      "T2M_MAX": 22.28,
+      "ALLSKY_KT": 0.7,
+      "ALLSKY_SFC_PAR_TOT": 8.09
+    },
+    "2025-01-17": {
+      "ALLSKY_SFC_SW_DWN": 18.78,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 4.99,
+      "WS50M": 7.65,
+      "T2M": 17.41,
+      "T2MDEW": 3.47,
+      "T2MWET": 10.44,
+      "T2M_MIN": 8.37,
+      "T2M_MAX": 27.97,
+      "ALLSKY_KT": 0.72,
+      "ALLSKY_SFC_PAR_TOT": 8.29
+    },
+    "2025-01-18": {
+      "ALLSKY_SFC_SW_DWN": 19.9,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 5.55,
+      "WS50M": 8.14,
+      "T2M": 17.63,
+      "T2MDEW": 2.74,
+      "T2MWET": 10.19,
+      "T2M_MIN": 10.99,
+      "T2M_MAX": 26.88,
+      "ALLSKY_KT": 0.76,
+      "ALLSKY_SFC_PAR_TOT": 8.77
+    },
+    "2025-01-19": {
+      "ALLSKY_SFC_SW_DWN": 16.62,
+      "PRECTOTCORR": 0.02,
+      "WS10M": 3.52,
+      "WS50M": 4.29,
+      "T2M": 11.98,
+      "T2MDEW": 1.71,
+      "T2MWET": 6.84,
+      "T2M_MIN": 3.44,
+      "T2M_MAX": 20.83,
+      "ALLSKY_KT": 0.63,
+      "ALLSKY_SFC_PAR_TOT": 7.35
+    },
+    "2025-01-20": {
+      "ALLSKY_SFC_SW_DWN": 14.08,
+      "PRECTOTCORR": 0.03,
+      "WS10M": 2.25,
+      "WS50M": 3.37,
+      "T2M": 12.66,
+      "T2MDEW": 1.04,
+      "T2MWET": 6.85,
+      "T2M_MIN": 3.05,
+      "T2M_MAX": 24.74,
+      "ALLSKY_KT": 0.53,
+      "ALLSKY_SFC_PAR_TOT": 6.26
+    },
+    "2025-01-21": {
+      "ALLSKY_SFC_SW_DWN": 17.9,
+      "PRECTOTCORR": 0.02,
+      "WS10M": 3.47,
+      "WS50M": 3.98,
+      "T2M": 9.17,
+      "T2MDEW": 1.31,
+      "T2MWET": 5.24,
+      "T2M_MIN": -2.02,
+      "T2M_MAX": 21.96,
+      "ALLSKY_KT": 0.67,
+      "ALLSKY_SFC_PAR_TOT": 7.9
+    },
+    "2025-01-22": {
+      "ALLSKY_SFC_SW_DWN": 20.05,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 1.35,
+      "WS50M": 1.79,
+      "T2M": 9.38,
+      "T2MDEW": -2.18,
+      "T2MWET": 3.6,
+      "T2M_MIN": -1.52,
+      "T2M_MAX": 23.63,
+      "ALLSKY_KT": 0.75,
+      "ALLSKY_SFC_PAR_TOT": 8.76
+    },
+    "2025-01-23": {
+      "ALLSKY_SFC_SW_DWN": 20.25,
+      "PRECTOTCORR": 0.01,
+      "WS10M": 3.33,
+      "WS50M": 4.17,
+      "T2M": 11.84,
+      "T2MDEW": -0.19,
+      "T2MWET": 5.82,
+      "T2M_MIN": 4.56,
+      "T2M_MAX": 23.76,
+      "ALLSKY_KT": 0.75,
+      "ALLSKY_SFC_PAR_TOT": 8.76
+    },
+    "2025-01-24": {
+      "ALLSKY_SFC_SW_DWN": 10.38,
+      "PRECTOTCORR": 0.04,
+      "WS10M": 3.63,
+      "WS50M": 4.18,
+      "T2M": 7.56,
+      "T2MDEW": 3.35,
+      "T2MWET": 5.46,
+      "T2M_MIN": 3.48,
+      "T2M_MAX": 13.15,
+      "ALLSKY_KT": 0.38,
+      "ALLSKY_SFC_PAR_TOT": 4.71
+    },
+    "2025-01-25": {
+      "ALLSKY_SFC_SW_DWN": 18.15,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 1.57,
+      "WS50M": 2.38,
+      "T2M": 12.97,
+      "T2MDEW": 2.92,
+      "T2MWET": 7.94,
+      "T2M_MIN": 3.36,
+      "T2M_MAX": 23.22,
+      "ALLSKY_KT": 0.67,
+      "ALLSKY_SFC_PAR_TOT": 8.01
+    },
+    "2025-01-26": {
+      "ALLSKY_SFC_SW_DWN": 19.89,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 2.35,
+      "WS50M": 3.33,
+      "T2M": 16.41,
+      "T2MDEW": 3.95,
+      "T2MWET": 10.18,
+      "T2M_MIN": 7.41,
+      "T2M_MAX": 27.17,
+      "ALLSKY_KT": 0.73,
+      "ALLSKY_SFC_PAR_TOT": 8.75
+    },
+    "2025-01-27": {
+      "ALLSKY_SFC_SW_DWN": 19.0,
+      "PRECTOTCORR": 0.01,
+      "WS10M": 2.7,
+      "WS50M": 3.6,
+      "T2M": 17.05,
+      "T2MDEW": 6.14,
+      "T2MWET": 11.6,
+      "T2M_MIN": 9.77,
+      "T2M_MAX": 27.25,
+      "ALLSKY_KT": 0.69,
+      "ALLSKY_SFC_PAR_TOT": 8.38
+    },
+    "2025-01-28": {
+      "ALLSKY_SFC_SW_DWN": 19.4,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 2.14,
+      "WS50M": 2.9,
+      "T2M": 17.95,
+      "T2MDEW": 9.39,
+      "T2MWET": 13.67,
+      "T2M_MIN": 10.47,
+      "T2M_MAX": 28.57,
+      "ALLSKY_KT": 0.7,
+      "ALLSKY_SFC_PAR_TOT": 8.55
+    },
+    "2025-01-29": {
+      "ALLSKY_SFC_SW_DWN": 20.07,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 3.28,
+      "WS50M": 4.94,
+      "T2M": 19.29,
+      "T2MDEW": 6.18,
+      "T2MWET": 12.74,
+      "T2M_MIN": 11.77,
+      "T2M_MAX": 29.79,
+      "ALLSKY_KT": 0.72,
+      "ALLSKY_SFC_PAR_TOT": 8.94
+    },
+    "2025-01-30": {
+      "ALLSKY_SFC_SW_DWN": 21.42,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 5.52,
+      "WS50M": 7.89,
+      "T2M": 18.7,
+      "T2MDEW": 2.08,
+      "T2MWET": 10.39,
+      "T2M_MIN": 10.92,
+      "T2M_MAX": 28.57,
+      "ALLSKY_KT": 0.77,
+      "ALLSKY_SFC_PAR_TOT": 9.35
+    },
+    "2025-01-31": {
+      "ALLSKY_SFC_SW_DWN": 18.14,
+      "PRECTOTCORR": 0.0,
+      "WS10M": 3.66,
+      "WS50M": 4.8,
+      "T2M": 15.16,
+      "T2MDEW": 2.15,
+      "T2MWET": 8.66,
+      "T2M_MIN": 9.0,
+      "T2M_MAX": 23.51,
+      "ALLSKY_KT": 0.65,
+      "ALLSKY_SFC_PAR_TOT": 8.1
+    }
+  }
+}

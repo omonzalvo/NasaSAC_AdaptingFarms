@@ -1,0 +1,296 @@
+{
+  "contract_version": "1.0",
+  "climate": {
+    "source": "NASA POWER Daily API",
+    "source_url": "https://power.larc.nasa.gov/docs/services/api/temporal/daily/",
+    "latitude": 21.861,
+    "longitude": -100.625,
+    "start": "2025-01-01",
+    "end": "2025-01-31",
+    "time_standard": "LST",
+    "facts": [
+      {
+        "id": "PRECTOTCORR",
+        "label": "Precipitación acumulada en días disponibles",
+        "value": 2.79,
+        "unit": "mm",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "T2M",
+        "label": "Temperatura media de días disponibles",
+        "value": 13.93,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "T2M_MAX",
+        "label": "Media de temperaturas máximas diarias disponibles",
+        "value": 23.24,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "ALLSKY_SFC_SW_DWN",
+        "label": "Radiación solar diaria media disponible",
+        "value": 15.94,
+        "unit": "MJ/m²/day",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "WS10M",
+        "label": "Velocidad media del viento a diez metros",
+        "value": 3.36,
+        "unit": "m/s",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "WS50M",
+        "label": "Velocidad media del viento a cincuenta metros",
+        "value": 4.56,
+        "unit": "m/s",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "T2MDEW",
+        "label": "Temperatura media del punto de rocío",
+        "value": 4.62,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "T2MWET",
+        "label": "Temperatura media de bulbo húmedo",
+        "value": 9.27,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "ALLSKY_KT",
+        "label": "Índice medio de claridad",
+        "value": 0.6,
+        "unit": "adimensional",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "ALLSKY_SFC_PAR_TOT",
+        "label": "Radiación fotosintéticamente activa diaria media",
+        "value": 7.08,
+        "unit": "MJ/m²/day",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      },
+      {
+        "id": "T2M_MIN",
+        "label": "Media de temperaturas mínimas diarias disponibles",
+        "value": 6.92,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31,
+        "coverage_pct": 100.0
+      }
+    ],
+    "monthly": [
+      {
+        "id": "PRECTOTCORR:2025-01",
+        "variable": "PRECTOTCORR",
+        "month": "2025-01",
+        "value": 2.79,
+        "unit": "mm",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "T2M:2025-01",
+        "variable": "T2M",
+        "month": "2025-01",
+        "value": 13.93,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "T2M_MAX:2025-01",
+        "variable": "T2M_MAX",
+        "month": "2025-01",
+        "value": 23.24,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "ALLSKY_SFC_SW_DWN:2025-01",
+        "variable": "ALLSKY_SFC_SW_DWN",
+        "month": "2025-01",
+        "value": 15.94,
+        "unit": "MJ/m²/day",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "WS10M:2025-01",
+        "variable": "WS10M",
+        "month": "2025-01",
+        "value": 3.36,
+        "unit": "m/s",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "WS50M:2025-01",
+        "variable": "WS50M",
+        "month": "2025-01",
+        "value": 4.56,
+        "unit": "m/s",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "T2MDEW:2025-01",
+        "variable": "T2MDEW",
+        "month": "2025-01",
+        "value": 4.62,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "T2MWET:2025-01",
+        "variable": "T2MWET",
+        "month": "2025-01",
+        "value": 9.27,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "ALLSKY_KT:2025-01",
+        "variable": "ALLSKY_KT",
+        "month": "2025-01",
+        "value": 0.6,
+        "unit": "adimensional",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "ALLSKY_SFC_PAR_TOT:2025-01",
+        "variable": "ALLSKY_SFC_PAR_TOT",
+        "month": "2025-01",
+        "value": 7.08,
+        "unit": "MJ/m²/day",
+        "valid_days": 31,
+        "expected_days": 31
+      },
+      {
+        "id": "T2M_MIN:2025-01",
+        "variable": "T2M_MIN",
+        "month": "2025-01",
+        "value": 6.92,
+        "unit": "°C",
+        "valid_days": 31,
+        "expected_days": 31
+      }
+    ],
+    "source_metadata": {
+      "header": {
+        "title": "NASA/POWER Source Native Resolution Daily Data",
+        "api": {
+          "version": "v2.10.3",
+          "name": "POWER Daily API"
+        },
+        "sources": [
+          "MERRA2",
+          "SYN1DEG",
+          "POWER"
+        ],
+        "fill_value": -999.0,
+        "time_standard": "LST",
+        "start": "20250101",
+        "end": "20250131"
+      },
+      "parameters": {
+        "ALLSKY_SFC_SW_DWN": {
+          "units": "MJ/m^2/day",
+          "longname": "All Sky Surface Shortwave Downward Irradiance"
+        },
+        "PRECTOTCORR": {
+          "units": "mm/day",
+          "longname": "Precipitation Corrected"
+        },
+        "WS10M": {
+          "units": "m/s",
+          "longname": "Wind Speed at 10 Meters"
+        },
+        "WS50M": {
+          "units": "m/s",
+          "longname": "Wind Speed at 50 Meters"
+        },
+        "T2M": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters"
+        },
+        "T2MDEW": {
+          "units": "C",
+          "longname": "Dew/Frost Point at 2 Meters"
+        },
+        "T2MWET": {
+          "units": "C",
+          "longname": "Wet Bulb Temperature at 2 Meters"
+        },
+        "T2M_MIN": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Minimum"
+        },
+        "T2M_MAX": {
+          "units": "C",
+          "longname": "Temperature at 2 Meters Maximum"
+        },
+        "ALLSKY_KT": {
+          "units": "dimensionless",
+          "longname": "All Sky Insolation Clearness Index"
+        },
+        "ALLSKY_SFC_PAR_TOT": {
+          "units": "MJ/m^2/day",
+          "longname": "All Sky Surface Total PAR"
+        }
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -100.625,
+          21.861,
+          1787.54
+        ]
+      },
+      "request_url": "https://power.larc.nasa.gov/api/temporal/daily/point?start=20250101&end=20250131&latitude=21.861&longitude=-100.625&community=AG&parameters=ALLSKY_SFC_SW_DWN%2CPRECTOTCORR%2CWS10M%2CWS50M%2CT2M%2CT2MDEW%2CT2MWET%2CT2M_MIN%2CT2M_MAX%2CALLSKY_KT%2CALLSKY_SFC_PAR_TOT&format=JSON&time-standard=LST"
+    },
+    "limits": [
+      "Datos históricos regionales; no medición exacta de la parcela.",
+      "Un solo período no demuestra una tendencia climática ni predice la próxima cosecha.",
+      "Acumulados parciales no equivalen a totales del período completo.",
+      "No hay catálogo agronómico validado conectado: no se recomiendan rotaciones específicas."
+    ]
+  },
+  "profile": {},
+  "warnings": [],
+  "request_id": "a6c8b289efd21a434140caa7d5590f6e96d6a0dd767918475d0f27f5dbbf9fa5"
+}

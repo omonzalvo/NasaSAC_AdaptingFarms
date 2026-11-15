@@ -1,4 +1,10 @@
+HEAD
 .venv/
 __pycache__/
 .env
 .streamlit/secrets.toml
+.streamlit/secrets.toml
+.env
+.venv/
+__pycache__/
+10c5831 (IA Fetch)
