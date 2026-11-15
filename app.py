@@ -29,7 +29,55 @@ from services.rotation_ui import render_rotations
 ## Configuración de la página
 st.set_page_config(page_title="Prometheus", page_icon="🌱", layout="wide")
 
-st.markdown("<h1 style='text-align: center;'>Prometheus</h1>", unsafe_allow_html=True)
+# Título animado minimalista: aparece con un fade in y se escribe letra por letra
+# (máquina de escribir), con un cursor que parpadea al final.
+# Usa una fuente monoespaciada para que cada letra ocupe exactamente 1ch.
+# Si el sistema pide menos movimiento (prefers-reduced-motion), el título queda fijo.
+TITULO = "PROMETHEUS"
+st.markdown(
+    f"""
+    <style>
+    .titulo-wrap {{
+        text-align: center;
+        margin: 0.4em 0 0.3em;
+        animation: titulo-fade 0.8s ease-out both;
+    }}
+    .titulo-prometheus {{
+        display: inline-block;
+        font-family: "Source Code Pro", ui-monospace, Menlo, monospace;
+        font-size: clamp(2rem, 6vw, 3.6rem);
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        padding-right: 0.1em;
+        width: {len(TITULO)}ch;
+        border-right: 0.08em solid currentColor;
+        animation: titulo-escribir 1.6s steps({len(TITULO)}) 0.5s both,
+                   titulo-cursor 0.9s step-end infinite;
+    }}
+    @keyframes titulo-fade {{
+        from {{ opacity: 0; }}
+        to   {{ opacity: 1; }}
+    }}
+    @keyframes titulo-escribir {{
+        from {{ width: 0; }}
+        to   {{ width: {len(TITULO)}ch; }}
+    }}
+    @keyframes titulo-cursor {{
+        50% {{ border-color: transparent; }}
+    }}
+    @media (prefers-reduced-motion: reduce) {{
+        .titulo-wrap, .titulo-prometheus {{ animation: none; }}
+        .titulo-prometheus {{ border-right: none; }}
+    }}
+    </style>
+    <div class="titulo-wrap">
+        <div class="titulo-prometheus" role="heading" aria-level="1">{TITULO}</div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 st.markdown(
     "<p style='text-align: center; color: gray;'>NASA Space Apps Challenge 2026 - Team: Nova Aquila</p>",
     unsafe_allow_html=True,

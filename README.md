@@ -40,7 +40,7 @@ Es una herramienta de apoyo: **no reemplaza el criterio del agricultor ni la ase
 
 3. Abre http://localhost:8501.
 
-Usa `--build` cada vez que cambie `requirements.txt`. Si solo cambias archivos `.py`, basta con recargar la página, porque `docker-compose.yml` monta la carpeta dentro del contenedor.
+Usa `--build` cada vez que cambie `requirements.txt`. Si cambias archivos de `services/`, reinicia con `docker compose restart web` para que Streamlit los vuelva a cargar. No hace falta reconstruir, porque `docker-compose.yml` monta la carpeta dentro del contenedor.
 
 **Sin Docker:** instala con `pip install -r requirements.txt` y ejecuta `streamlit run app.py`. En ese caso `.env` no se carga solo: exporta `GEMINI_API_KEY` o usa `.streamlit/secrets.toml`.
 
@@ -95,11 +95,36 @@ Cada estrategia suma puntos de agua, helada y diversidad de familias. El peso de
 
 **Prometheus** (`llm.py`): recibe solo números ya calculados y tiene la orden de no inventar cifras. Explica los términos técnicos y aclara las diferencias entre datos satelitales y estaciones en tierra.
 
+## Ampliar el catálogo de cultivos
+
+El catálogo vive en `data/crops.json`, así que para agregar un cultivo no hace falta tocar el código. Copia uno existente y llena sus datos:
+
+```json
+"Trigo": {
+  "family": "Poaceae",
+  "water_mm": [450, 650],
+  "water_basis": "ET de ciclo completo orientativa; no equivale a lluvia requerida ni riego.",
+  "drought_sensitivity": "media",
+  "nitrogen_fixation_potential": false,
+  "frost": "Tolerante",
+  "gdd_target": null,
+  "gdd_note": "Requiere variedad y método; no se inventa un valor universal.",
+  "sources": ["https://www.fao.org/4/s2022e/s2022e07.htm"]
+}
+```
+
+Este bloque es solo un ejemplo de formato: verifica cada valor en la fuente antes de usarlo.
+
+- `water_mm`: el rango de agua del ciclo completo según la FAO.
+- `family`: la familia botánica. Se usa para medir la diversidad de la rotación.
+
+En cuanto lo agregas, el cultivo aparece en "Cultivo anterior" y "Cultivo actual". Las dos alternativas que se comparan siguen siendo frijol (leguminosa) y sorgo (tolerante a sequía), porque están definidas en `services/rotations.py`. Para proponer otras alternativas hay que editar esa lista.
+
 ## Limitaciones
 
 - **Resolución gruesa:** POWER usa una malla de unos 50 km, así que no distingue diferencias dentro de una parcela.
 - **Datos históricos:** no son pronósticos.
-- **Catálogo piloto:** solo incluye maíz, frijol y sorgo.
+- **Catálogo piloto ampliable:** hoy incluye maíz, frijol y sorgo. Se amplía editando `data/crops.json` (ver abajo).
 - **Faltan datos de suelo:** el análisis no tiene textura ni nutrientes, y el pH y el drenaje los indica el agricultor.
 - **Sin evaluación económica:** no se calcula la rentabilidad.
 - **Puntajes heurísticos:** son reglas del equipo, no probabilidades.

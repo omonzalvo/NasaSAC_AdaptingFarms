@@ -21,8 +21,8 @@ def render_rotations(df, lat, lon):
     """
     st.header('2 · Cuéntanos sobre tu cultivo')
     st.write('Compara opciones para tu siguiente ciclo usando información histórica y tus prioridades.')
-    st.caption('Prototipo con maíz, frijol y sorgo. Los resultados son orientativos y no predicen el clima futuro.')
     crops=list(catalog()['crops'])
+    st.caption('Catálogo piloto ampliable: hoy incluye '+', '.join(c.lower() for c in crops)+'. Se pueden agregar cultivos con sus datos FAO sin cambiar el código. Los resultados son orientativos y no predicen el clima futuro.')
     st.caption('Al comparar, Prometheus recibirá la ubicación y estos datos para generar una explicación. No incluyas datos personales.')
     with st.form('rotation_profile'):
         st.markdown('**Cultivos y objetivo**')
@@ -136,6 +136,7 @@ def render_rotations(df, lat, lon):
                         for text in strategy[field]: st.write('• '+text)
                     for url in strategy['sources']: st.markdown(f'[Fuente agronómica]({url})')
     with st.expander('Datos, método y catálogo'):
+        st.write('Catálogo piloto ampliable (data/crops.json): '+', '.join(catalog()['crops'])+'. Cada cultivo nuevo necesita su rango de agua FAO, familia botánica, sensibilidad a helada y fuentes.')
         st.write('Periodo consultado: '+report['window']['start']+' a '+report['window']['end'])
         st.write('La comparación usa lluvia histórica, heladas y diversidad de cultivos cuando hay datos suficientes.')
         for line in report['limitations']: st.write('• '+line)
